@@ -2,9 +2,7 @@ import { Piece } from './Piece.ts';
 import { PlayerColor, PieceType } from './types.ts';
 
 export class Board {
-  // Mảng 2 chiều đại diện cho bàn cờ. 10 dòng (y) x 9 cột (x). Null nếu ô trống.
   public grid: (Piece | null)[][];
-  // Map lưu trữ các quân cờ hiện có trên bàn, dễ tìm kiếm theo ID
   public pieces: Map<string, Piece> = new Map();
 
   constructor() {
@@ -13,7 +11,6 @@ export class Board {
   }
 
   private setupInitialBoard() {
-    // Đội hình khởi tạo: y=0..4 là Quân Đen, y=5..9 là Quân Đỏ
     const initConfig: { type: PieceType; color: PlayerColor; x: number; y: number }[] = [];
 
     // --- QUÂN ĐEN ---
@@ -66,7 +63,6 @@ export class Board {
     return x < 0 || x > 8 || y < 0 || y > 9;
   }
 
-  // Di chuyển quân cờ trên dữ liệu (chưa xử lý luật lệ đúng sai ở hàm này)
   public movePiece(pieceId: string, toX: number, toY: number): boolean {
     const piece = this.pieces.get(pieceId);
     if (!piece) return false;
@@ -75,16 +71,14 @@ export class Board {
     const targetPiece = this.getPieceAt(toX, toY);
     if (targetPiece) {
       if (targetPiece.color === piece.color) {
-        return false; // Không ăn quân mình
+        return false; 
       }
-      this.pieces.delete(targetPiece.id); // Ăn quân địch
+      this.pieces.delete(targetPiece.id); 
     }
 
-    // Cập nhật tọa độ trên grid
     this.grid[piece.position.y][piece.position.x] = null;
     this.grid[toY][toX] = piece;
 
-    // Cập nhật tọa độ của đối tượng
     piece.position.x = toX;
     piece.position.y = toY;
 
