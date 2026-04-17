@@ -1,7 +1,6 @@
 import { Board } from './core/Board.ts';
 
 function initGame() {
-  // 1. Khởi tạo dữ liệu game (Bộ nhớ)
   const board = new Board();
   
   // TODO: 2. Khởi tạo giao diện đồ họa (BoardRenderer) tại đây để nối với DOM
